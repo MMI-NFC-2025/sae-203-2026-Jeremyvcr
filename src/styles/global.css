@@ -1,1 +1,530 @@
-@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow:wght@400;600;700&display=swap');
+
+:root {
+  --color-bg: #efefef;
+  --color-surface: #ffffff;
+  --color-primary: #eab774;
+  --color-primary-dark: #d39c53;
+  --color-accent: #f28c00;
+  --color-dark: #161616;
+  --color-muted: #595959;
+  --radius: 14px;
+  --shadow: 0 8px 20px rgb(0 0 0 / 10%);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background:
+    radial-gradient(circle at 80% -20%, #f7d09c 0%, transparent 55%),
+    linear-gradient(#f6f3ec, #efefef);
+  color: var(--color-dark);
+  font-family: 'Barlow', sans-serif;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+h1,
+h2,
+h3 {
+  font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: 0.03em;
+  margin: 0;
+}
+
+main {
+  width: min(100% - 2rem, 1200px);
+  margin-inline: auto;
+  padding-bottom: 2rem;
+}
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  background: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid rgb(0 0 0 / 10%);
+}
+
+.site-header__logo {
+  width: 84px;
+}
+
+.site-header__menu-btn {
+  border: 0;
+  border-radius: 8px;
+  background: rgb(0 0 0 / 10%);
+  width: 42px;
+  height: 38px;
+  cursor: pointer;
+}
+
+.site-header__menu-icon {
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+.site-nav {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  background: #f5c181;
+  border-bottom: 1px solid rgb(0 0 0 / 10%);
+  display: none;
+}
+
+.site-nav.is-open {
+  display: block;
+}
+
+.site-nav__list {
+  margin: 0;
+  padding: 0.5rem 0;
+  list-style: none;
+}
+
+.site-nav__list a {
+  display: block;
+  padding: 0.75rem 1.2rem;
+  border-bottom: 1px solid rgb(0 0 0 / 12%);
+  font-weight: 600;
+}
+
+.hero {
+  margin-top: 1rem;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.hero__image {
+  width: 100%;
+  height: 230px;
+  object-fit: cover;
+}
+
+.hero__content {
+  background: var(--color-surface);
+  padding: 1rem;
+}
+
+.hero__title {
+  color: var(--color-accent);
+  font-size: clamp(2.5rem, 8vw, 4.8rem);
+  line-height: 0.94;
+}
+
+.hero__subtitle,
+.hero__date,
+.hero__place {
+  margin: 0.25rem 0;
+  font-weight: 700;
+}
+
+.hero__subtitle,
+.hero__date {
+  color: var(--color-muted);
+}
+
+.hero__place {
+  color: var(--color-accent);
+  font-size: 1.65rem;
+}
+
+.countdown,
+.ticketing,
+.home-program,
+.partners,
+.listing-page,
+.detail-page,
+.content-page {
+  margin-top: 1rem;
+}
+
+.countdown__value {
+  margin: 0;
+  font-size: clamp(2rem, 6vw, 3rem);
+  color: var(--color-accent);
+  text-align: center;
+}
+
+.ticketing__button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  background: var(--color-primary);
+  border-radius: 999px;
+  padding: 0.7rem 1.1rem;
+  font-weight: 700;
+  box-shadow: var(--shadow);
+}
+
+.home-program__intro {
+  text-align: center;
+}
+
+.home-program__intro h2,
+.partners__title {
+  color: var(--color-accent);
+  font-size: 2rem;
+}
+
+.home-program__intro img {
+  width: 26px;
+  margin: 0.4rem auto;
+}
+
+.home-program__cards,
+.listing-grid,
+.partners__logos,
+.info-grid {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.program-card,
+.listing-card,
+.content-page__section,
+.info-card,
+.contact-details,
+.contact-form {
+  background: var(--color-surface);
+  border-radius: var(--radius);
+  padding: 0.9rem;
+  box-shadow: var(--shadow);
+}
+
+.program-card__content {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 700;
+}
+
+.home-program__trumpet {
+  width: 120px;
+  margin: 0.4rem auto 0;
+}
+
+.partners__logos img {
+  background: #fff;
+  border-radius: 12px;
+  padding: 0.6rem;
+  box-shadow: var(--shadow);
+}
+
+.listing-page > h1,
+.detail-page > h1,
+.content-page__hero h1 {
+  color: var(--color-accent);
+  font-size: clamp(2rem, 6vw, 3.4rem);
+}
+
+.listing-card h2 {
+  color: var(--color-accent);
+  font-size: 1.6rem;
+}
+
+.listing-card p {
+  margin: 0.3rem 0;
+}
+
+.listing-card__link {
+  display: inline-block;
+  margin-top: 0.5rem;
+  color: var(--color-primary-dark);
+  font-weight: 700;
+}
+
+.detail-page__meta,
+.content-page__hero {
+  background: var(--color-surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1rem;
+  margin-top: 0.8rem;
+}
+
+.artist-detail-page {
+  max-width: 760px;
+}
+
+.artist-detail-page > h1 {
+  text-align: center;
+  margin-top: 1rem;
+  font-size: clamp(2.8rem, 11vw, 5rem);
+  line-height: 0.95;
+}
+
+.artist-detail-page__block {
+  background: transparent;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0.25rem 0.2rem;
+  margin-top: 1.1rem;
+}
+
+.artist-detail-page__block h2 {
+  color: var(--color-accent);
+  text-align: center;
+  font-size: clamp(2.3rem, 10vw, 4rem);
+  line-height: 0.95;
+}
+
+.artist-detail-page__scene,
+.artist-detail-page__time,
+.artist-detail-page__date,
+.artist-detail-page__empty {
+  margin: 0.4rem 0;
+  text-align: center;
+  font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: 0.02em;
+}
+
+.artist-detail-page__scene,
+.artist-detail-page__time {
+  font-size: clamp(2.5rem, 11vw, 4.3rem);
+  color: #8f5500;
+  line-height: 0.95;
+}
+
+.artist-detail-page__date {
+  text-transform: capitalize;
+  color: var(--color-muted);
+  font-size: clamp(1rem, 3.8vw, 1.45rem);
+}
+
+.artist-detail-page__more-dates {
+  margin: 0.3rem 0 0;
+  text-align: center;
+  color: var(--color-muted);
+  font-weight: 700;
+}
+
+.artist-detail-page__description {
+  margin: 0.7rem auto 0;
+  max-width: 70ch;
+  line-height: 1.4;
+  font-size: 1.06rem;
+  color: #6b3f08;
+}
+
+.artist-detail-page__gallery {
+  margin-top: 0.9rem;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0;
+}
+
+.artist-detail-page__gallery img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 0;
+}
+
+.content-page__hero p {
+  margin: 0.6rem 0 0;
+  font-size: 1.05rem;
+}
+
+.content-page__section h2,
+.info-card h2,
+.contact-details h2 {
+  color: var(--color-accent);
+  font-size: 1.8rem;
+}
+
+.contact-layout {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.contact-form {
+  display: grid;
+  gap: 0.8rem;
+}
+
+.contact-form label {
+  display: grid;
+  gap: 0.35rem;
+  font-weight: 600;
+}
+
+.contact-form input,
+.contact-form textarea {
+  border: 1px solid #d2d2d2;
+  border-radius: 8px;
+  padding: 0.55rem;
+  font: inherit;
+}
+
+.contact-form button {
+  justify-self: start;
+  border: 0;
+  border-radius: 999px;
+  background: var(--color-accent);
+  color: #fff;
+  padding: 0.55rem 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.site-footer {
+  margin-top: 2rem;
+  background: var(--color-primary);
+  padding: 1.4rem 1rem;
+}
+
+.site-footer__links {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.55rem;
+}
+
+.site-footer__links a {
+  border-bottom: 1px solid rgb(0 0 0 / 20%);
+  padding-bottom: 0.35rem;
+  font-weight: 600;
+}
+
+.site-footer__socials {
+  display: flex;
+  gap: 0.55rem;
+  margin: 1rem 0;
+}
+
+.site-footer__socials a {
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  display: grid;
+  place-content: center;
+  background: rgb(0 0 0 / 16%);
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+.site-footer__icon {
+  width: 96px;
+  margin-left: auto;
+}
+
+@media (min-width: 960px) {
+  .site-header {
+    padding: 0.9rem 2rem;
+  }
+
+  .site-header__menu-btn {
+    display: none;
+  }
+
+  .site-nav {
+    position: static;
+    display: block;
+    background: transparent;
+    border: 0;
+  }
+
+  .site-nav__list {
+    display: flex;
+    gap: 1rem;
+    padding: 0;
+  }
+
+  .site-nav__list a {
+    border: 0;
+    padding: 0.4rem 0.45rem;
+    border-radius: 7px;
+  }
+
+  .site-nav__list a:hover {
+    background: rgb(0 0 0 / 12%);
+  }
+
+  .hero {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    min-height: 430px;
+  }
+
+  .hero__image {
+    height: 100%;
+  }
+
+  .hero__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 1.6rem;
+  }
+
+  .home-program__cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: start;
+  }
+
+  .home-program__trumpet {
+    grid-column: 1 / -1;
+  }
+
+  .partners__logos {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .listing-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .artist-detail-page {
+    max-width: 980px;
+  }
+
+  .artist-detail-page > h1 {
+    margin-top: 1.2rem;
+  }
+
+  .artist-detail-page__gallery {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .info-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .contact-layout {
+    grid-template-columns: 1.6fr 1fr;
+    align-items: start;
+  }
+
+  .site-footer {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    align-items: end;
+    gap: 2rem;
+    padding: 1.4rem 2rem;
+  }
+
+  .site-footer__socials {
+    margin: 0;
+  }
+}

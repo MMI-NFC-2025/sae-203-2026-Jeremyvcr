@@ -1,0 +1,107 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { pb, getImageUrl } from '../../lib/pocketbase.js';
+
+export async function getStaticPaths() {
+  const artistes = await pb.collection('artistes').getFullList();
+
+  return artistes.map((artiste) => ({
+    params: { id: artiste.id }
+  }));
+}
+
+const { id } = Astro.params;
+
+const artiste = await pb.collection('artistes').getOne(id);
+
+const performances = await pb.collection('performances').getFullList({
+  filter: `artistes="${id}"`,
+  sort: 'date_et_heure',
+  expand: 'scene'
+});
+
+const photoUrl = getImageUrl(artiste, artiste.galerie);
+const firstPerformance = performances[0] ?? null;
+
+const formatTime = (value) => new Intl.DateTimeFormat('fr-FR', {
+  hour: '2-digit',
+  minute: '2-digit',
+  timeZone: 'Europe/Paris'
+}).format(new Date(value)).replace(':', 'h');
+
+const formatDate = (value) => new Intl.DateTimeFormat('fr-FR', {
+  weekday: 'long',
+  day: '2-digit',
+  month: 'long'
+}).format(new Date(value));
+
+const artistFiles = [];
+
+if (Array.isArray(artiste.galerie)) {
+  artistFiles.push(...artiste.galerie);
+} else if (artiste.galerie) {
+  artistFiles.push(artiste.galerie);
+}
+
+if (artiste.photo_principale) {
+  artistFiles.push(artiste.photo_principale);
+}
+
+const galleryUrls = [...new Set(artistFiles)]
+  .map((file) => getImageUrl(artiste, file))
+  .filter(Boolean);
+---
+
+<Layout title={artiste.nom}>
+  <main class="detail-page artist-detail-page">
+    {photoUrl && (
+      <div class="detail-page__cover">
+        <img
+          src={photoUrl}
+          alt={`Photo de ${artiste.nom}`}
+          class="detail-page__photo"
+        />
+      </div>
+    )}
+
+    <h1>{artiste.nom}</h1>
+
+    <section class="artist-detail-page__block">
+      <h2>Représentation</h2>
+      {firstPerformance ? (
+        <>
+          <p class="artist-detail-page__scene">{firstPerformance.expand?.scene?.nom}</p>
+          <p class="artist-detail-page__time">{formatTime(firstPerformance.date_et_heure)}</p>
+          <p class="artist-detail-page__date">{formatDate(firstPerformance.date_et_heure)}</p>
+          {performances.length > 1 && (
+            <p class="artist-detail-page__more-dates">
+              + {performances.length - 1} autre{performances.length > 2 ? 's' : ''} date{performances.length > 2 ? 's' : ''}
+            </p>
+          )}
+        </>
+      ) : (
+        <p class="artist-detail-page__empty">Programmation à venir.</p>
+      )}
+    </section>
+
+    <section class="artist-detail-page__block">
+      <h2>Description</h2>
+      <p class="artist-detail-page__description">
+        {artiste.description || `${artiste.nom} se produira pendant le festival sur la scène programmée.`}
+      </p>
+    </section>
+
+    <section class="artist-detail-page__block">
+      <h2>Galerie</h2>
+      {galleryUrls.length > 0 ? (
+        <div class="artist-detail-page__gallery">
+          {galleryUrls.map((url, index) => (
+            <img src={url} alt={`Visuel ${index + 1} de ${artiste.nom}`} loading="lazy" />
+          ))}
+        </div>
+      ) : (
+        <p class="artist-detail-page__empty">Aucune image disponible.</p>
+      )}
+    </section>
+  </main>
+</Layout>

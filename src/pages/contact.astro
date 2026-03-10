@@ -1,0 +1,40 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Contact">
+	<main class="content-page contact-page">
+		<section class="content-page__hero">
+			<h1>Contact</h1>
+			<p>Une question ? Ecrivez-nous, l'equipe vous repond rapidement.</p>
+		</section>
+
+		<section class="contact-layout">
+			<form class="contact-form" method="post">
+				<label>
+					<span>Nom</span>
+					<input type="text" name="nom" required />
+				</label>
+
+				<label>
+					<span>Email</span>
+					<input type="email" name="email" required />
+				</label>
+
+				<label>
+					<span>Message</span>
+					<textarea name="message" rows="5" required></textarea>
+				</label>
+
+				<button type="submit">Envoyer</button>
+			</form>
+
+			<article class="contact-details">
+				<h2>Nos coordonnees</h2>
+				<p>Festival La Fanfa Comtoise</p>
+				<p>Parc du Prieure, 25200 Montbeliard</p>
+				<p>contact@fanfa-comtoise.fr</p>
+			</article>
+		</section>
+	</main>
+</Layout>

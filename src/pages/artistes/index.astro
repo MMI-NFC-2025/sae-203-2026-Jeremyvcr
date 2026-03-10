@@ -1,0 +1,36 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { pb } from '../../lib/pocketbase.js';
+import ArtistCard from '../../components/ArtistCard.astro';
+
+const artistes = await pb.collection('artistes').getFullList({
+  sort: 'nom'
+});
+
+// Récupère toutes les performances pour afficher scène + heure sur chaque carte
+const performances = await pb.collection('performances').getFullList({
+  sort: 'date_et_heure',
+  expand: 'scene'
+});
+
+// Construit un dictionnaire artisteId -> performance[]
+const perfByArtiste = {};
+for (const perf of performances) {
+  const artisteId = perf.artistes;
+  if (!artisteId) continue;
+  if (!perfByArtiste[artisteId]) perfByArtiste[artisteId] = [];
+  perfByArtiste[artisteId].push(perf);
+}
+---
+
+<Layout title="Artistes">
+  <main class="listing-page">
+    <h1>Les artistes</h1>
+
+    <section class="listing-grid">
+      {artistes.map((artiste) => (
+        <ArtistCard artiste={artiste} performances={perfByArtiste[artiste.id] ?? []} />
+      ))}
+    </section>
+  </main>
+</Layout>

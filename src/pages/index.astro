@@ -1,10 +1,68 @@
 ---
 import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+import trumpet from '../assets/trompette2.0.svg';
 ---
 
-<Layout>
-	<h1>Welcome to Astro!</h1>
+<Layout title="Accueil - La Fanfà'Comtoise">
+  <main class="home-page">
+    <section class="hero">
+      <img src="/imageacceuil.svg" alt="Image d'accueil" class="hero__image" />
+
+      <div class="hero__content">
+        <h1 class="hero__title">La Fanfà'Comtoise</h1>
+        <p class="hero__subtitle">Jazz, Fanfare, Bonne humeur</p>
+        <p class="hero__date">Du 27 au 29 juin 2026</p>
+        <p class="hero__place">À Montbéliard</p>
+      </div>
+    </section>
+
+    <section class="countdown">
+      <h2 class="countdown__value">190 : 19 : 35</h2>
+    </section>
+
+    <section class="ticketing">
+      <a class="ticketing__button" href="/contact">
+        Billetterie
+        <span aria-hidden="true">-></span>
+      </a>
+    </section>
+
+    <section class="home-program">
+      <div class="home-program__intro">
+        <h2>Vous voulez en savoir plus ?</h2>
+        <img src="/flechebas.svg" alt="Fleche vers le bas" />
+        <h2>Programmation</h2>
+      </div>
+
+      <div class="home-program__cards">
+        <article class="program-card">
+          <img src="/bandajul.svg" alt="La banda jul" />
+          <div class="program-card__content">
+            <p>La banda jul</p>
+            <p>27/06</p>
+          </div>
+        </article>
+
+        <article class="program-card">
+          <img src="/mishmash.svg" alt="Le petit Mish-Mash" />
+          <div class="program-card__content">
+            <p>Le petit Mish-Mash</p>
+            <p>28/06</p>
+          </div>
+        </article>
+
+        <img src={trumpet.src} alt="Illustration trompette" class="home-program__trumpet" />
+      </div>
+    </section>
+
+    <section class="partners">
+      <h2 class="partners__title">Nos partenaires</h2>
+
+      <div class="partners__logos">
+        <img src="/logo-montbeliard.svg" alt="Logo de Montbeliard" />
+        <img src="/logo-iut.svg" alt="Logo de l'IUT" />
+        <img src="/logo-trivalor.svg" alt="Logo de Trivalor" />
+      </div>
+    </section>
+  </main>
 </Layout>

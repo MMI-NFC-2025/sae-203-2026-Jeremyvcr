@@ -1,0 +1,37 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { pb, getImageUrl } from '../../lib/pocketbase.js';
+
+const scenes = await pb.collection('scene').getFullList({
+  sort: 'nom'
+});
+---
+
+<Layout title="Les scènes">
+  <main class="listing-page">
+    <h1>Les scènes</h1>
+
+    <section class="listing-grid">
+      {scenes.map((scene) => {
+        const photoUrl = getImageUrl(scene, scene.photo);
+        return (
+          <article class="listing-card">
+            {photoUrl && (
+              <img
+                class="listing-card__photo"
+                src={photoUrl}
+                alt={`Photo de ${scene.nom}`}
+                loading="lazy"
+              />
+            )}
+            <div class="listing-card__body">
+              <h2>{scene.nom}</h2>
+              <p>{scene.lieux}</p>
+              <a class="listing-card__link" href={`/scenes/${scene.id}`}>Voir la scène</a>
+            </div>
+          </article>
+        );
+      })}
+    </section>
+  </main>
+</Layout>

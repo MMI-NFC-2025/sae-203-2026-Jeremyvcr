@@ -1,0 +1,42 @@
+---
+import logo from '../assets/trompettenoir.svg';
+
+const navLinks = [
+  { href: '/', label: "Page d'accueil" },
+  { href: '/festival', label: 'Le festival' },
+  { href: '/programmation', label: 'Programmation' },
+  { href: '/scenes', label: 'Les scenes' },
+  { href: '/infos', label: 'Infos pratiques' },
+  { href: '/contact', label: 'Contact' }
+];
+---
+
+<header class="site-header" data-header>
+  <a href="/" class="site-header__logo-link" aria-label="Retour a l'accueil">
+    <img class="site-header__logo" src={logo.src} alt="Logo La Fanfa Comtoise" />
+  </a>
+
+  <button class="site-header__menu-btn" type="button" aria-label="Ouvrir le menu" aria-expanded="false" data-menu-btn>
+    <span class="site-header__menu-icon" aria-hidden="true">=</span>
+  </button>
+
+  <nav class="site-nav" aria-label="Navigation principale" data-nav>
+    <ul class="site-nav__list">
+      {navLinks.map((link) => (
+        <li>
+          <a href={link.href}>{link.label}</a>
+        </li>
+      ))}
+    </ul>
+  </nav>
+</header>
+
+<script>
+  const menuButton = document.querySelector('[data-menu-btn]');
+  const nav = document.querySelector('[data-nav]');
+
+  menuButton?.addEventListener('click', () => {
+    const isOpen = nav?.classList.toggle('is-open');
+    menuButton.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  });
+</script>

@@ -1,0 +1,70 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { pb, getImageUrl } from '../../lib/pocketbase.js';
+
+export async function getStaticPaths() {
+  const scenes = await pb.collection('scene').getFullList();
+
+  return scenes.map((scene) => ({
+    params: { id: scene.id }
+  }));
+}
+
+const { id } = Astro.params;
+
+const scene = await pb.collection('scene').getOne(id);
+
+const performances = await pb.collection('performances').getFullList({
+  filter: `scene="${id}"`,
+  sort: 'date_et_heure',
+  expand: 'artistes'
+});
+
+const scenePhotoUrl = getImageUrl(scene, scene.photo);
+---
+
+<Layout title={scene.nom}>
+  <main class="detail-page">
+    {scenePhotoUrl && (
+      <div class="detail-page__cover">
+        <img
+          src={scenePhotoUrl}
+          alt={`Photo de ${scene.nom}`}
+          class="detail-page__photo"
+        />
+      </div>
+    )}
+
+    <h1>{scene.nom}</h1>
+
+    <section class="detail-page__meta">
+      <p class="detail-page__desc">{scene.description}</p>
+      <p class="detail-page__location">{scene.lieux}</p>
+      {scene.capacite && <p class="detail-page__capacity">Capacité : {scene.capacite}</p>}
+    </section>
+
+    <h2>Artistes sur cette scène</h2>
+
+    <section class="listing-grid">
+      {performances.map((perf) => {
+        const artistePhotoUrl = getImageUrl(perf.expand?.artistes, perf.expand?.artistes?.galerie);
+        return (
+          <article class="listing-card">
+            {artistePhotoUrl && (
+              <img
+                class="listing-card__photo"
+                src={artistePhotoUrl}
+                alt={perf.expand?.artistes?.nom}
+                loading="lazy"
+              />
+            )}
+            <div class="listing-card__body">
+              <p>{perf.expand?.artistes?.nom}</p>
+              <p>{new Date(perf.date_et_heure).toLocaleString('fr-FR')}</p>
+            </div>
+          </article>
+        );
+      })}
+    </section>
+  </main>
+</Layout>

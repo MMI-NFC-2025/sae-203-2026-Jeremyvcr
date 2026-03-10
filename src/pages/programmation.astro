@@ -1,0 +1,39 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { pb, getImageUrl } from '../lib/pocketbase.js';
+
+const performances = await pb.collection('performances').getFullList({
+  sort: 'date_et_heure',
+  expand: 'artistes,scene'
+});
+---
+
+<Layout title="Programmation">
+  <main class="listing-page">
+    <h1>Programmation</h1>
+
+    <section class="listing-grid">
+      {performances.map((perf) => {
+        const artiste = perf.expand?.artistes;
+        const photoUrl = getImageUrl(artiste, artiste?.galerie);
+        return (
+          <article class="listing-card">
+            {photoUrl && (
+              <img
+                class="listing-card__photo"
+                src={photoUrl}
+                alt={artiste?.nom}
+                loading="lazy"
+              />
+            )}
+            <div class="listing-card__body">
+              <h2>{artiste?.nom}</h2>
+              <p>Scène : {perf.expand?.scene?.nom}</p>
+              <p>{new Date(perf.date_et_heure).toLocaleString('fr-FR')}</p>
+            </div>
+          </article>
+        );
+      })}
+    </section>
+  </main>
+</Layout>
