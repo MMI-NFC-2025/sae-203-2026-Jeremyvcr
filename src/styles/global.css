@@ -332,18 +332,80 @@ main {
   color: #6b3f08;
 }
 
-.artist-detail-page__gallery {
+.artist-carousel {
+  position: relative;
   margin-top: 0.9rem;
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0;
 }
 
-.artist-detail-page__gallery img {
+.artist-carousel__viewport {
+  overflow: hidden;
+}
+
+.artist-carousel__track {
+  display: flex;
+  transition: transform 0.35s ease;
+  will-change: transform;
+}
+
+.artist-carousel__slide {
+  min-width: 100%;
+  margin: 0;
+}
+
+.artist-carousel__slide img {
   width: 100%;
-  aspect-ratio: 4 / 3;
+  height: 230px;
   object-fit: cover;
-  border-radius: 0;
+}
+
+.artist-carousel__btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 0;
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  background: rgb(0 0 0 / 55%);
+  color: #fff;
+  font-size: 1.4rem;
+  cursor: pointer;
+  display: grid;
+  place-content: center;
+  z-index: 2;
+}
+
+.artist-carousel__btn:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.artist-carousel__btn--prev {
+  left: 0.5rem;
+}
+
+.artist-carousel__btn--next {
+  right: 0.5rem;
+}
+
+.artist-carousel__dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.4rem;
+  margin-top: 0.55rem;
+}
+
+.artist-carousel__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  border: 0;
+  background: rgb(0 0 0 / 26%);
+  cursor: pointer;
+}
+
+.artist-carousel__dot.is-active {
+  background: var(--color-accent);
 }
 
 .content-page__hero p {
@@ -668,8 +730,8 @@ main {
     margin-top: 1.2rem;
   }
 
-  .artist-detail-page__gallery {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+  .artist-carousel__slide img {
+    height: 340px;
   }
 
   .info-grid {

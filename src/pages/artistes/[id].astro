@@ -31,16 +31,6 @@ const formatTime = (value) => new Intl.DateTimeFormat('fr-FR', {
   timeZone: 'Europe/Paris'
 }).format(new Date(value)).replace(':', 'h');
 
-const formatDate = (value) => new Intl.DateTimeFormat('fr-FR', {
-  weekday: 'long',
-  day: '2-digit',
-  month: 'long'
-}).format(new Date(value));
-
-const genreText = artiste.genre ? `de style ${artiste.genre}` : 'du festival';
-
-const descriptionFallback = `${artiste.nom}, artiste ${genreText}, apporte a la Fanfa'Comtoise toute son energie sur scene. Son repertoire propose un moment musical convivial et accessible pour le public.`;
-
 const artistFiles = [];
 
 if (Array.isArray(artiste.galerie)) {
@@ -57,15 +47,17 @@ const galleryUrls = [...new Set(artistFiles)]
   .map((file) => getImageUrl(artiste, file))
   .filter(Boolean);
 
-// Conserve une grille 2x2 comme sur la maquette, meme si l'artiste a peu d'images.
-const galleryDisplayUrls = [...galleryUrls];
+const baseCarouselUrls = galleryUrls.length > 0 ? galleryUrls : (photoUrl ? [photoUrl] : []);
+const carouselUrls = [...baseCarouselUrls];
 
-if (galleryDisplayUrls.length === 1) {
-  galleryDisplayUrls.push(galleryDisplayUrls[0], galleryDisplayUrls[0], galleryDisplayUrls[0]);
-} else if (galleryDisplayUrls.length === 2) {
-  galleryDisplayUrls.push(galleryDisplayUrls[0], galleryDisplayUrls[1]);
-} else if (galleryDisplayUrls.length === 3) {
-  galleryDisplayUrls.push(galleryDisplayUrls[0]);
+// Force plusieurs slides pour pouvoir faire defiler le carrousel
+// meme quand PocketBase contient peu d'images.
+if (carouselUrls.length > 0 && carouselUrls.length < 4) {
+  let index = 0;
+  while (carouselUrls.length < 4) {
+    carouselUrls.push(baseCarouselUrls[index % baseCarouselUrls.length]);
+    index += 1;
+  }
 }
 ---
 
@@ -98,17 +90,39 @@ if (galleryDisplayUrls.length === 1) {
     <section class="artist-detail-page__block">
       <h2>Description</h2>
       <p class="artist-detail-page__description">
-        {artiste.description || descriptionFallback}
+        {artiste.description?.trim() || 'Description non renseignee dans PocketBase.'}
       </p>
     </section>
 
     <section class="artist-detail-page__block">
       <h2>Galerie</h2>
-      {galleryDisplayUrls.length > 0 ? (
-        <div class="artist-detail-page__gallery">
-          {galleryDisplayUrls.slice(0, 4).map((url, index) => (
-            <img src={url} alt={`Visuel ${index + 1} de ${artiste.nom}`} loading="lazy" />
-          ))}
+      {carouselUrls.length > 0 ? (
+        <div class="artist-carousel" data-carousel>
+          <button class="artist-carousel__btn artist-carousel__btn--prev" data-carousel-prev aria-label="Image précédente">‹</button>
+
+          <div class="artist-carousel__viewport">
+            <div class="artist-carousel__track" data-carousel-track>
+              {carouselUrls.map((url, index) => (
+                <figure class="artist-carousel__slide" data-carousel-slide aria-hidden={index === 0 ? 'false' : 'true'}>
+                  <img src={url} alt={`Visuel ${index + 1} de ${artiste.nom}`} loading="lazy" />
+                </figure>
+              ))}
+            </div>
+          </div>
+
+          <button class="artist-carousel__btn artist-carousel__btn--next" data-carousel-next aria-label="Image suivante">›</button>
+
+          <div class="artist-carousel__dots" role="tablist" aria-label="Navigation galerie">
+            {carouselUrls.map((_, index) => (
+              <button
+                class={`artist-carousel__dot ${index === 0 ? 'is-active' : ''}`}
+                data-carousel-dot
+                data-index={index}
+                aria-label={`Aller à l'image ${index + 1}`}
+                aria-selected={index === 0 ? 'true' : 'false'}
+              />
+            ))}
+          </div>
         </div>
       ) : (
         <p class="artist-detail-page__empty">Aucune image disponible.</p>
@@ -116,3 +130,57 @@ if (galleryDisplayUrls.length === 1) {
     </section>
   </main>
 </Layout>
+
+<script>
+  const carousels = document.querySelectorAll('[data-carousel]');
+
+  carousels.forEach((carousel) => {
+    const track = carousel.querySelector('[data-carousel-track]');
+    const slides = carousel.querySelectorAll('[data-carousel-slide]');
+    const prevBtn = carousel.querySelector('[data-carousel-prev]');
+    const nextBtn = carousel.querySelector('[data-carousel-next]');
+    const dots = carousel.querySelectorAll('[data-carousel-dot]');
+
+    if (!track || slides.length === 0) return;
+
+    let index = 0;
+    const maxIndex = slides.length - 1;
+
+    const render = () => {
+      track.style.transform = `translateX(-${index * 100}%)`;
+
+      slides.forEach((slide, slideIndex) => {
+        slide.setAttribute('aria-hidden', slideIndex === index ? 'false' : 'true');
+      });
+
+      dots.forEach((dot, dotIndex) => {
+        dot.classList.toggle('is-active', dotIndex === index);
+        dot.setAttribute('aria-selected', dotIndex === index ? 'true' : 'false');
+      });
+
+      if (prevBtn) prevBtn.disabled = maxIndex === 0;
+      if (nextBtn) nextBtn.disabled = maxIndex === 0;
+    };
+
+    prevBtn?.addEventListener('click', () => {
+      index = index === 0 ? maxIndex : index - 1;
+      render();
+    });
+
+    nextBtn?.addEventListener('click', () => {
+      index = index === maxIndex ? 0 : index + 1;
+      render();
+    });
+
+    dots.forEach((dot) => {
+      dot.addEventListener('click', () => {
+        const dotIndex = Number.parseInt(dot.dataset.index || '0', 10);
+        if (Number.isNaN(dotIndex)) return;
+        index = dotIndex;
+        render();
+      });
+    });
+
+    render();
+  });
+</script>
