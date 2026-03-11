@@ -21,6 +21,15 @@ for (const perf of performances) {
   if (!perfByArtiste[artisteId]) perfByArtiste[artisteId] = [];
   perfByArtiste[artisteId].push(perf);
 }
+
+const artistesSortedByDate = [...artistes].sort((a, b) => {
+  const aFirst = perfByArtiste[a.id]?.[0]?.date_et_heure;
+  const bFirst = perfByArtiste[b.id]?.[0]?.date_et_heure;
+  if (!aFirst && !bFirst) return a.nom.localeCompare(b.nom, 'fr');
+  if (!aFirst) return 1;
+  if (!bFirst) return -1;
+  return new Date(aFirst) - new Date(bFirst);
+});
 ---
 
 <Layout title="Artistes">
@@ -28,7 +37,7 @@ for (const perf of performances) {
     <h1>Les artistes</h1>
 
     <section class="listing-grid">
-      {artistes.map((artiste) => (
+      {artistesSortedByDate.map((artiste) => (
         <ArtistCard artiste={artiste} performances={perfByArtiste[artiste.id] ?? []} />
       ))}
     </section>

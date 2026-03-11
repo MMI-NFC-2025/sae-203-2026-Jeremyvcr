@@ -81,6 +81,16 @@ if (carouselUrls.length > 0 && carouselUrls.length < 4) {
         <>
           <p class="artist-detail-page__scene">{firstPerformance.expand?.scene?.nom}</p>
           <p class="artist-detail-page__time">{formatTime(firstPerformance.date_et_heure)}</p>
+
+          {performances.length > 0 && (
+            <div class="artist-detail-page__dates-list">
+              {performances.map((perf) => (
+                <p>
+                  {new Date(perf.date_et_heure).toLocaleDateString('fr-FR')} - {formatTime(perf.date_et_heure)}
+                </p>
+              ))}
+            </div>
+          )}
         </>
       ) : (
         <p class="artist-detail-page__empty">Programmation à venir.</p>

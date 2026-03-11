@@ -6,18 +6,83 @@ const performances = await pb.collection('performances').getFullList({
   sort: 'date_et_heure',
   expand: 'artistes,scene'
 });
+
+const scenes = [...new Set(performances.map((perf) => perf.expand?.scene?.nom).filter(Boolean))].sort();
+const genres = [...new Set(performances.map((perf) => perf.expand?.artistes?.genre).filter(Boolean))].sort();
+const days = [...new Set(performances.map((perf) => new Date(perf.date_et_heure).toISOString().slice(0, 10)))].sort();
+const times = [...new Set(performances.map((perf) => new Date(perf.date_et_heure).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })))].sort();
+
+const programmePdfDataUrl =
+  'data:application/pdf;base64,JVBERi0xLjQKMSAwIG9iago8PCAvVHlwZSAvQ2F0YWxvZyAvUGFnZXMgMiAwIFIgPj4KZW5kb2JqCjIgMCBvYmoKPDwgL1R5cGUgL1BhZ2VzIC9LaWRzIFsgMyAwIFIgXSAvQ291bnQgMSA+PgplbmRvYmoKMyAwIG9iago8PCAvVHlwZSAvUGFnZSAvUGFyZW50IDIgMCBSIC9NZWRpYUJveCBbMCAwIDU5NSA4NDJdIC9Db250ZW50cyA0IDAgUiAvUmVzb3VyY2VzIDw8IC9Gb250IDw8IC9GMSA1IDAgUiA+PiA+PiA+PgplbmRvYmoKNCAwIG9iago8PCAvTGVuZ3RoIDEwMSA+PgpzdHJlYW0KQlQKL0YxIDI0IFRmCjcyIDc2MCBUZAooUHJvZ3JhbW1lIC0gTGEgRmFuZmEgQ29tdG9pc2UpIFRqCi9GMSAxNCBUZgo3MiA3MjAgVGQKKFRlbGVjaGFyZ2VtZW50IGZpY3RpZiBwb3VyIGxhIFNBRSkgVGoKRVQKZW5kc3RyZWFtCmVuZG9iago1IDAgb2JqCjw8IC9UeXBlIC9Gb250IC9TdWJ0eXBlIC9UeXBlMSAvQmFzZUZvbnQgL0hlbHZldGljYSA+PgplbmRvYmoKeHJlZgowIDYKMDAwMDAwMDAwMCA2NTUzNSBmIAowMDAwMDAwMDEwIDAwMDAwIG4gCjAwMDAwMDAwNjAgMDAwMDAgbiAKMDAwMDAwMDExNyAwMDAwMCBuIAowMDAwMDAwMjQzIDAwMDAwIG4gCjAwMDAwMDAzOTQgMDAwMDAgbiAKdHJhaWxlcgo8PCAvU2l6ZSA2IC9Sb290IDEgMCBSID4+CnN0YXJ0eHJlZgo0ODAKJSVFT0Y=';
 ---
 
 <Layout title="Programmation">
   <main class="listing-page">
     <h1>Programmation</h1>
 
-    <section class="listing-grid">
+    <section class="program-toolbar">
+      <div class="program-filters">
+        <label>
+          <span>Genre</span>
+          <select data-filter="genre">
+            <option value="">Tous</option>
+            {genres.map((genre) => (
+              <option value={genre}>{genre}</option>
+            ))}
+          </select>
+        </label>
+
+        <label>
+          <span>Scene</span>
+          <select data-filter="scene">
+            <option value="">Toutes</option>
+            {scenes.map((scene) => (
+              <option value={scene}>{scene}</option>
+            ))}
+          </select>
+        </label>
+
+        <label>
+          <span>Jour</span>
+          <select data-filter="day">
+            <option value="">Tous</option>
+            {days.map((day) => (
+              <option value={day}>{new Date(day).toLocaleDateString('fr-FR')}</option>
+            ))}
+          </select>
+        </label>
+
+        <label>
+          <span>Horaire</span>
+          <select data-filter="time">
+            <option value="">Tous</option>
+            {times.map((time) => (
+              <option value={time}>{time}</option>
+            ))}
+          </select>
+        </label>
+      </div>
+
+      <a class="program-download" href={programmePdfDataUrl} download="programme-festival.pdf">
+        Telecharger le programme PDF
+      </a>
+    </section>
+
+    <section class="listing-grid" data-program-list>
       {performances.map((perf) => {
         const artiste = perf.expand?.artistes;
         const photoUrl = getImageUrl(artiste, artiste?.galerie);
+        const day = new Date(perf.date_et_heure).toISOString().slice(0, 10);
+        const time = new Date(perf.date_et_heure).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
         return (
-          <article class="listing-card">
+          <article
+            class="listing-card"
+            data-program-card
+            data-genre={artiste?.genre || ''}
+            data-scene={perf.expand?.scene?.nom || ''}
+            data-day={day}
+            data-time={time}
+          >
             {photoUrl && (
               <img
                 class="listing-card__photo"
@@ -42,3 +107,28 @@ const performances = await pb.collection('performances').getFullList({
     </section>
   </main>
 </Layout>
+
+<script>
+  const list = document.querySelector('[data-program-list]');
+  const cards = list ? list.querySelectorAll('[data-program-card]') : [];
+  const selects = document.querySelectorAll('.program-filters [data-filter]');
+
+  const applyFilters = () => {
+    const genre = document.querySelector('[data-filter="genre"]')?.value || '';
+    const scene = document.querySelector('[data-filter="scene"]')?.value || '';
+    const day = document.querySelector('[data-filter="day"]')?.value || '';
+    const time = document.querySelector('[data-filter="time"]')?.value || '';
+
+    cards.forEach((card) => {
+      const genreMatch = !genre || card.dataset.genre === genre;
+      const sceneMatch = !scene || card.dataset.scene === scene;
+      const dayMatch = !day || card.dataset.day === day;
+      const timeMatch = !time || card.dataset.time === time;
+      card.style.display = genreMatch && sceneMatch && dayMatch && timeMatch ? '' : 'none';
+    });
+  };
+
+  selects.forEach((select) => {
+    select.addEventListener('change', applyFilters);
+  });
+</script>
