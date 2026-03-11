@@ -2,6 +2,8 @@
 import Layout from '../../layouts/Layout.astro';
 import { pb, getImageUrl } from '../../lib/pocketbase.js';
 
+export const prerender = true;
+
 export async function getStaticPaths() {
   const artistes = await pb.collection('artistes').getFullList();
 
@@ -35,6 +37,10 @@ const formatDate = (value) => new Intl.DateTimeFormat('fr-FR', {
   month: 'long'
 }).format(new Date(value));
 
+const genreText = artiste.genre ? `de style ${artiste.genre}` : 'du festival';
+
+const descriptionFallback = `${artiste.nom}, artiste ${genreText}, apporte a la Fanfa'Comtoise toute son energie sur scene. Son repertoire propose un moment musical convivial et accessible pour le public.`;
+
 const artistFiles = [];
 
 if (Array.isArray(artiste.galerie)) {
@@ -50,6 +56,17 @@ if (artiste.photo_principale) {
 const galleryUrls = [...new Set(artistFiles)]
   .map((file) => getImageUrl(artiste, file))
   .filter(Boolean);
+
+// Conserve une grille 2x2 comme sur la maquette, meme si l'artiste a peu d'images.
+const galleryDisplayUrls = [...galleryUrls];
+
+if (galleryDisplayUrls.length === 1) {
+  galleryDisplayUrls.push(galleryDisplayUrls[0], galleryDisplayUrls[0], galleryDisplayUrls[0]);
+} else if (galleryDisplayUrls.length === 2) {
+  galleryDisplayUrls.push(galleryDisplayUrls[0], galleryDisplayUrls[1]);
+} else if (galleryDisplayUrls.length === 3) {
+  galleryDisplayUrls.push(galleryDisplayUrls[0]);
+}
 ---
 
 <Layout title={artiste.nom}>
@@ -72,12 +89,6 @@ const galleryUrls = [...new Set(artistFiles)]
         <>
           <p class="artist-detail-page__scene">{firstPerformance.expand?.scene?.nom}</p>
           <p class="artist-detail-page__time">{formatTime(firstPerformance.date_et_heure)}</p>
-          <p class="artist-detail-page__date">{formatDate(firstPerformance.date_et_heure)}</p>
-          {performances.length > 1 && (
-            <p class="artist-detail-page__more-dates">
-              + {performances.length - 1} autre{performances.length > 2 ? 's' : ''} date{performances.length > 2 ? 's' : ''}
-            </p>
-          )}
         </>
       ) : (
         <p class="artist-detail-page__empty">Programmation à venir.</p>
@@ -87,15 +98,15 @@ const galleryUrls = [...new Set(artistFiles)]
     <section class="artist-detail-page__block">
       <h2>Description</h2>
       <p class="artist-detail-page__description">
-        {artiste.description || `${artiste.nom} se produira pendant le festival sur la scène programmée.`}
+        {artiste.description || descriptionFallback}
       </p>
     </section>
 
     <section class="artist-detail-page__block">
       <h2>Galerie</h2>
-      {galleryUrls.length > 0 ? (
+      {galleryDisplayUrls.length > 0 ? (
         <div class="artist-detail-page__gallery">
-          {galleryUrls.map((url, index) => (
+          {galleryDisplayUrls.slice(0, 4).map((url, index) => (
             <img src={url} alt={`Visuel ${index + 1} de ${artiste.nom}`} loading="lazy" />
           ))}
         </div>

@@ -4,36 +4,32 @@ const { artiste, performances = [] } = Astro.props;
 const photoUrl = getImageUrl(artiste, artiste.galerie);
 ---
 
-<div>
-  <article class="listing-card">
-    {photoUrl && (
-      <img
-        class="listing-card__photo"
-        src={photoUrl}
-        alt={`Photo de ${artiste.nom}`}
-        loading="lazy"
-      />
-    )}
-    <div class="listing-card__body">
-      <h2>{artiste.nom}</h2>
-      <p class="listing-card__genre">{artiste.genre}</p>
+<a class="listing-card listing-card--clickable" href={`/artistes/${artiste.id}`} aria-label={`Voir la page de ${artiste.nom}`}>
+  {photoUrl && (
+    <img
+      class="listing-card__photo"
+      src={photoUrl}
+      alt={`Photo de ${artiste.nom}`}
+      loading="lazy"
+    />
+  )}
+  <div class="listing-card__body">
+    <h2>{artiste.nom}</h2>
+    <p class="listing-card__genre">{artiste.genre}</p>
 
-      {performances.map((perf) => (
-        <p class="listing-card__perf">
-          <span class="listing-card__scene">{perf.expand?.scene?.nom}</span>
-          &nbsp;&mdash;&nbsp;
-          <span class="listing-card__date">
-            {new Date(perf.date_et_heure).toLocaleString('fr-FR', {
-              day: '2-digit', month: '2-digit', year: 'numeric',
-              hour: '2-digit', minute: '2-digit'
-            })}
-          </span>
-        </p>
-      ))}
+    {performances.map((perf) => (
+      <p class="listing-card__perf">
+        <span class="listing-card__scene">{perf.expand?.scene?.nom}</span>
+        &nbsp;&mdash;&nbsp;
+        <span class="listing-card__date">
+          {new Date(perf.date_et_heure).toLocaleString('fr-FR', {
+            day: '2-digit', month: '2-digit', year: 'numeric',
+            hour: '2-digit', minute: '2-digit'
+          })}
+        </span>
+      </p>
+    ))}
 
-      <a class="listing-card__link" href={`/artistes/${artiste.id}`}>
-        Voir l'artiste
-      </a>
-    </div>
-  </article>
-</div>
+    <p class="listing-card__link">Voir l'artiste</p>
+  </div>
+</a>

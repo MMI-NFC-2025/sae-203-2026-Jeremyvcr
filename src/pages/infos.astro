@@ -3,27 +3,42 @@ import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout title="Infos pratiques">
-	<main class="content-page infos-page">
-		<section class="content-page__hero">
-			<h1>Infos pratiques</h1>
-			<p>Le festival est ouvert a tous et se deploie sur plusieurs espaces a Montbeliard.</p>
+	<main class="infos-page">
+		<section class="infos-page__hero-image">
+			<img src="/infospratique.avif" alt="Parade du festival" />
 		</section>
 
-		<section class="info-grid">
-			<article class="info-card">
-				<h2>Ou loger</h2>
-				<p>Hotels, residences et campings partenaires sont proposes a moins de 15 minutes des scenes.</p>
-			</article>
+		<section class="infos-page__intro">
+			<h1>Infos pratiques</h1>
+			<p>Le festival est ouvert a tous et gratuit pour tous</p>
+		</section>
 
-			<article class="info-card">
-				<h2>Transport</h2>
-				<p>Des navettes circulent entre la gare, les parkings relais et les principales zones de concert.</p>
-			</article>
+		<section class="infos-page__section">
+			<h2>Ou loger</h2>
+			<p>La ville de Montbeliard compte plusieurs hotel dans le centre ville et en peripherie</p>
+			<img src="/chantier.avif" alt="Hotel a Montbeliard" />
+		</section>
 
-			<article class="info-card">
-				<h2>FAQ</h2>
-				<p>Retrouvez les reponses sur les billets, les horaires, l'accessibilite PMR et les regles de securite.</p>
-			</article>
+		<section class="infos-page__section">
+			<h2>Transport</h2>
+			<p>
+				Des parkings se trouvent dans toute la ville, donc vous pouvez venir en voiture et vous
+				garer a l'un de ces parkings, la gare se situe proche du centre ville et le reseau de bus
+				assure le transport dans toute la ville
+			</p>
+		</section>
+
+		<section class="infos-page__section infos-page__faq">
+			<h2>FAQ</h2>
+
+			<h3>Peut on manger au festival ?</h3>
+			<p>Oui des stands de nourritures seront prevu a cette effet</p>
+
+			<h3>Fait-on le tri sélectif ?</h3>
+			<p>Oui vous trouverez des poubelles de tri</p>
+
+			<h3>Puis-je venir avec mon appareil photo ?</h3>
+			<p>Oui vous pouvez prendre votre appareils pour garder les meilleurs souvenirs</p>
 		</section>
 	</main>
 </Layout>

@@ -252,6 +252,16 @@ main {
   font-weight: 700;
 }
 
+.listing-card--clickable {
+  display: block;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.listing-card--clickable:hover {
+  transform: translateY(-2px);
+}
+
 .detail-page__meta,
 .content-page__hero {
   background: var(--color-surface);
@@ -263,6 +273,17 @@ main {
 
 .artist-detail-page {
   max-width: 760px;
+}
+
+.artist-detail-page .detail-page__cover {
+  margin-top: 0;
+}
+
+.artist-detail-page .detail-page__photo {
+  width: 100%;
+  height: 190px;
+  object-fit: cover;
+  object-position: center;
 }
 
 .artist-detail-page > h1 {
@@ -289,7 +310,6 @@ main {
 
 .artist-detail-page__scene,
 .artist-detail-page__time,
-.artist-detail-page__date,
 .artist-detail-page__empty {
   margin: 0.4rem 0;
   text-align: center;
@@ -302,19 +322,6 @@ main {
   font-size: clamp(2.5rem, 11vw, 4.3rem);
   color: #8f5500;
   line-height: 0.95;
-}
-
-.artist-detail-page__date {
-  text-transform: capitalize;
-  color: var(--color-muted);
-  font-size: clamp(1rem, 3.8vw, 1.45rem);
-}
-
-.artist-detail-page__more-dates {
-  margin: 0.3rem 0 0;
-  text-align: center;
-  color: var(--color-muted);
-  font-weight: 700;
 }
 
 .artist-detail-page__description {
@@ -349,6 +356,158 @@ main {
 .contact-details h2 {
   color: var(--color-accent);
   font-size: 1.8rem;
+}
+
+.festival-page {
+  width: min(100% - 0.6rem, 980px);
+  margin-inline: auto;
+  padding-bottom: 2rem;
+}
+
+.festival-page__hero-media img,
+.festival-page__team-photo img {
+  width: 100%;
+  object-fit: cover;
+}
+
+.festival-page__hero-media {
+  margin-top: 0.1rem;
+}
+
+.festival-page__intro,
+.festival-page__text-block,
+.festival-page__section-headline {
+  background: transparent;
+  padding: 0.9rem 0.6rem;
+}
+
+.festival-page__intro h1,
+.festival-page__section-headline h2 {
+  color: var(--color-accent);
+  text-align: center;
+  font-size: clamp(2.8rem, 13vw, 4.8rem);
+  line-height: 0.95;
+}
+
+.festival-page__intro h2 {
+  margin-top: 1.4rem;
+  color: #7c4b09;
+  font-size: clamp(2.2rem, 11vw, 3.8rem);
+  line-height: 1.04;
+  font-family: 'Bebas Neue', sans-serif;
+  font-weight: 400;
+}
+
+.festival-page__intro h2 span {
+  color: var(--color-accent);
+}
+
+.festival-page p {
+  margin: 0;
+  color: #6b3f08;
+  line-height: 1.24;
+}
+
+.festival-page__text-block {
+  display: grid;
+  gap: 1.25rem;
+  margin-top: 0.2rem;
+}
+
+.festival-page__text-block p:first-child {
+  color: var(--color-accent);
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2rem, 10vw, 3.3rem);
+  line-height: 1.02;
+}
+
+.festival-page__text-block p:last-child,
+.festival-page__section-headline p {
+  font-size: clamp(1.15rem, 5.6vw, 1.95rem);
+  font-family: 'Bebas Neue', sans-serif;
+}
+
+.festival-page__team-photo {
+  margin-top: 0.45rem;
+}
+
+.festival-page__section-headline {
+  margin-top: 0.6rem;
+}
+
+.festival-page__section-headline h2 {
+  margin-bottom: 0.8rem;
+}
+
+.festival-page__trumpet {
+  width: 120px;
+  margin: 0.8rem auto 0;
+}
+
+.infos-page {
+  width: min(100% - 0.6rem, 980px);
+  margin-inline: auto;
+  padding-bottom: 2rem;
+}
+
+.infos-page__hero-image img {
+  width: 100%;
+  height: 210px;
+  object-fit: cover;
+}
+
+.infos-page__intro,
+.infos-page__section {
+  padding: 0.9rem 0.6rem;
+}
+
+.infos-page__intro h1,
+.infos-page__section h2 {
+  color: var(--color-accent);
+  text-align: center;
+  font-size: clamp(2.8rem, 13vw, 4.8rem);
+  line-height: 0.95;
+}
+
+.infos-page__intro p,
+.infos-page__section p {
+  margin: 0;
+  color: #6b3f08;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2rem, 10vw, 3.2rem);
+  line-height: 1.04;
+}
+
+.infos-page__intro p {
+  margin-top: 1rem;
+}
+
+.infos-page__section {
+  margin-top: 0.4rem;
+}
+
+.infos-page__section h2 {
+  margin-bottom: 0.9rem;
+}
+
+.infos-page__section p {
+  font-size: clamp(1.2rem, 5.7vw, 1.95rem);
+}
+
+.infos-page__section img {
+  margin-top: 0.9rem;
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.infos-page__faq h3 {
+  margin: 1rem 0 0.35rem;
+  color: var(--color-accent);
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(1.9rem, 9vw, 3rem);
+  line-height: 1.02;
+  font-weight: 400;
 }
 
 .contact-layout {
@@ -409,19 +568,21 @@ main {
 
 .site-footer__socials {
   display: flex;
-  gap: 0.55rem;
+  gap: 0.9rem;
   margin: 1rem 0;
 }
 
 .site-footer__socials a {
-  width: 34px;
-  height: 34px;
-  border-radius: 999px;
+  width: 30px;
+  height: 30px;
   display: grid;
   place-content: center;
-  background: rgb(0 0 0 / 16%);
-  font-size: 0.7rem;
-  font-weight: 700;
+}
+
+.site-footer__socials a img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .site-footer__icon {
@@ -499,6 +660,10 @@ main {
     max-width: 980px;
   }
 
+  .artist-detail-page .detail-page__photo {
+    height: 360px;
+  }
+
   .artist-detail-page > h1 {
     margin-top: 1.2rem;
   }
@@ -514,6 +679,61 @@ main {
   .contact-layout {
     grid-template-columns: 1.6fr 1fr;
     align-items: start;
+  }
+
+  .festival-page {
+    width: min(100% - 2rem, 1120px);
+  }
+
+  .infos-page {
+    width: min(100% - 2rem, 1120px);
+  }
+
+  .infos-page__hero-image img {
+    height: 360px;
+  }
+
+  .infos-page__intro,
+  .infos-page__section {
+    padding-inline: 1rem;
+  }
+
+  .infos-page__section p,
+  .infos-page__faq h3 {
+    max-width: 36ch;
+    margin-inline: auto;
+  }
+
+  .infos-page__section img {
+    max-width: 760px;
+    height: 320px;
+    margin-inline: auto;
+  }
+
+  .festival-page__hero-media img {
+    height: 420px;
+  }
+
+  .festival-page__team-photo img {
+    height: 380px;
+  }
+
+  .festival-page__intro,
+  .festival-page__text-block,
+  .festival-page__section-headline {
+    padding-inline: 1rem;
+  }
+
+  .festival-page__text-block {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+    gap: 2rem;
+  }
+
+  .festival-page__section-headline p {
+    max-width: 36ch;
+    margin-inline: auto;
+    text-align: center;
   }
 
   .site-footer {

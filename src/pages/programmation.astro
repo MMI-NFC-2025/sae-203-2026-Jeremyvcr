@@ -30,6 +30,11 @@ const performances = await pb.collection('performances').getFullList({
               <h2>{artiste?.nom}</h2>
               <p>Scène : {perf.expand?.scene?.nom}</p>
               <p>{new Date(perf.date_et_heure).toLocaleString('fr-FR')}</p>
+              {artiste?.id && (
+                <a class="listing-card__link" href={`/artistes/${artiste.id}`}>
+                  Voir l'artiste
+                </a>
+              )}
             </div>
           </article>
         );

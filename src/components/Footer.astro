@@ -1,5 +1,9 @@
 ---
 import trumpet from '../assets/illustration-trompette.svg';
+import instagram from '../assets/instagram.svg';
+import facebook from '../assets/facebook.svg';
+import twitter from '../assets/twitter.svg';
+import youtube from '../assets/youtube.svg';
 ---
 
 <footer class="site-footer">
@@ -10,10 +14,18 @@ import trumpet from '../assets/illustration-trompette.svg';
   </ul>
 
   <div class="site-footer__socials" aria-label="Reseaux sociaux">
-    <a href="#" aria-label="Instagram">IG</a>
-    <a href="#" aria-label="Facebook">FB</a>
-    <a href="#" aria-label="Twitter">X</a>
-    <a href="#" aria-label="YouTube">YT</a>
+    <a href="#" aria-label="Instagram">
+      <img src={instagram.src} alt="" aria-hidden="true" />
+    </a>
+    <a href="#" aria-label="Facebook">
+      <img src={facebook.src} alt="" aria-hidden="true" />
+    </a>
+    <a href="#" aria-label="Twitter">
+      <img src={twitter.src} alt="" aria-hidden="true" />
+    </a>
+    <a href="#" aria-label="YouTube">
+      <img src={youtube.src} alt="" aria-hidden="true" />
+    </a>
   </div>
 
   <img src={trumpet.src} alt="Illustration trompette" class="site-footer__icon" />

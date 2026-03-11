@@ -61,6 +61,11 @@ const scenePhotoUrl = getImageUrl(scene, scene.photo);
             <div class="listing-card__body">
               <p>{perf.expand?.artistes?.nom}</p>
               <p>{new Date(perf.date_et_heure).toLocaleString('fr-FR')}</p>
+              {perf.expand?.artistes?.id && (
+                <a class="listing-card__link" href={`/artistes/${perf.expand.artistes.id}`}>
+                  Voir l'artiste
+                </a>
+              )}
             </div>
           </article>
         );

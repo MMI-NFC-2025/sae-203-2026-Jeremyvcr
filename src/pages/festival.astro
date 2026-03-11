@@ -1,32 +1,53 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import trumpet from '../assets/trompette2.0.svg';
 ---
 
 <Layout title="Le festival">
-  <main class="content-page">
-    <section class="content-page__hero">
+  <main class="festival-page">
+    <section class="festival-page__hero-media">
+      <img src="/Lefestival.avif" alt="Scene du festival" />
+    </section>
+
+    <section class="festival-page__intro">
       <h1>Le festival</h1>
-      <p>Notre festival a ete cree avec un seul but: donner le sourire.</p>
+      <h2>Notre festival a ete creer avec un seul but <span>Donner le sourire</span></h2>
     </section>
 
-    <section class="content-page__section">
-      <h2>L'eveil de la fanfare comtoise</h2>
-      <p>Nees d'une bande de musiciens de rue, les premieres editions ont rapidement rassemble des fanfares venues de toute la region.</p>
+    <section class="festival-page__text-block">
+      <p>Il s'agit de la premiere edition de la fanfa'comtoise</p>
+      <p>
+        Nous sommes un collectif de benevole qui ne recherche qu'une seule chose,
+        la convivialite et le partage dans la ville de Montbeliard.
+      </p>
     </section>
 
-    <section class="content-page__section">
+    <section class="festival-page__team-photo">
+      <img src="/chantier.avif" alt="Equipe technique du festival" />
+    </section>
+
+    <section class="festival-page__section-headline">
       <h2>Notre equipe technique</h2>
-      <p>Une equipe de benevoles, d'etudiants et de techniciens accompagne les artistes pour garantir un son et une lumiere de qualite.</p>
+      <p>Prete pour assurer votre securite ainsi que de votre bien etre</p>
+      <img src={trumpet.src} alt="Illustration trompette" class="festival-page__trumpet" />
     </section>
 
-    <section class="content-page__section">
+    <section class="festival-page__section-headline">
       <h2>Nos valeurs</h2>
-      <p>Le festival defend une programmation accessible, conviviale et intergenerationnelle, avec des tarifs justes et une forte implication locale.</p>
+      <p>
+        Nous sommes concerner par le bien etre et la convivialite de nos festivaliers,
+        du respect de l'environnement et de l'accessibilite pour tous,
+        en effet notre festival est gratuit, accessible pour tous, de tous horizon
+      </p>
     </section>
 
-    <section class="content-page__section">
+    <section class="festival-page__section-headline">
       <h2>Thematiques</h2>
-      <p>Fanfares, brass bands, pop festive, electro cuivre et rencontres citoyennes se croisent pendant trois jours au coeur de Montbeliard.</p>
+      <p>
+        Pour cette premiere edition, nous avons pour thematique les fanfares et le jazz,
+        vous retrouverez sur la scene des groupes venus de pres ou de loin pour vous faire
+        decouvrir leur style de musique parfois meconnus du grand public
+      </p>
     </section>
   </main>
 </Layout>
