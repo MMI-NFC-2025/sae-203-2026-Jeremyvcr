@@ -1,6 +1,6 @@
 import PocketBase from 'pocketbase';
 
-const pb = new PocketBase('http://127.0.0.1:8090');
+const pb = new PocketBase('https://sae206.vicaire.optimiseus.fr:4043');
 
 // 1. Liste de tous les artistes triés par date de représentation
 export async function getArtistsByDate() {
@@ -58,6 +58,6 @@ export async function getArtistsBySceneName(sceneName) {
 export async function saveItem(collectionName, data, id = null) {
   if (id) {
     return await pb.collection(collectionName).update(id, data);
-  }
+} else{
   return await pb.collection(collectionName).create(data);
-}
+}}

@@ -19,8 +19,8 @@ async function test() {
     console.log('--- Artistes triés alphabétiquement ---');
     console.log(await getArtistsAlphabetical());
 
-    const artistId = 'eb4sgy4bjnlh7fy'; // remplace si besoin
-    const sceneId = 'z5x154i0yz7i3p1';  // remplace si besoin
+    const artistId = 'eb4sgy4bjnlh7fy'; 
+    const sceneId = 'z5x154i0yz7i3p1';  
     const sceneName = 'Scène 1';
 
     console.log('--- Artiste par ID ---');

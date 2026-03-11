@@ -4,7 +4,7 @@ import { pb, getImageUrl } from '../lib/pocketbase.js';
 
 const performances = await pb.collection('performances').getFullList({
   sort: 'date_et_heure',
-  expand: 'artistes,scene'
+  expand: 'artistes, scene'
 });
 
 const scenes = [...new Set(performances.map((perf) => perf.expand?.scene?.nom).filter(Boolean))].sort();

@@ -2,15 +2,6 @@
 import Layout from '../../layouts/Layout.astro';
 import { pb, getImageUrl } from '../../lib/pocketbase.js';
 
-export const prerender = true;
-
-export async function getStaticPaths() {
-  const artistes = await pb.collection('artistes').getFullList();
-
-  return artistes.map((artiste) => ({
-    params: { id: artiste.id }
-  }));
-}
 
 const { id } = Astro.params;
 
