@@ -2,14 +2,19 @@
 import Layout from '../../layouts/Layout.astro';
 import { pb, getImageUrl } from '../../lib/pocketbase.js';
 
-const scenes = await pb.collection('scene').getFullList({
-  sort: 'nom'
-});
+let scenes = [];
+try {
+  scenes = await pb.collection('scene').getFullList({ sort: 'nom' });
+} catch { /* PocketBase inaccessible */ }
 ---
 
 <Layout title="Les scènes">
   <main class="listing-page">
     <h1>Les scènes</h1>
+
+    {scenes.length === 0 && (
+      <p class="pb-unavailable">Données indisponibles — base de données non accessible.</p>
+    )}
 
     <section class="listing-grid">
       {scenes.map((scene) => {

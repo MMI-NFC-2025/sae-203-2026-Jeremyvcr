@@ -2,10 +2,13 @@
 import Layout from '../layouts/Layout.astro';
 import { pb, getImageUrl } from '../lib/pocketbase.js';
 
-const performances = await pb.collection('performances').getFullList({
-  sort: 'date_et_heure',
-  expand: 'artistes, scene'
-});
+let performances = [];
+try {
+  performances = await pb.collection('performances').getFullList({
+    sort: 'date_et_heure',
+    expand: 'artistes, scene'
+  });
+} catch { /* PocketBase inaccessible */ }
 
 const scenes = [...new Set(performances.map((perf) => perf.expand?.scene?.nom).filter(Boolean))].sort();
 const genres = [...new Set(performances.map((perf) => perf.expand?.artistes?.genre).filter(Boolean))].sort();
@@ -19,6 +22,10 @@ const programmePdfDataUrl =
 <Layout title="Programmation">
   <main class="listing-page">
     <h1>Programmation</h1>
+
+    {performances.length === 0 && (
+      <p class="pb-unavailable">Données indisponibles — base de données non accessible.</p>
+    )}
 
     <section class="program-toolbar">
       <div class="program-filters">

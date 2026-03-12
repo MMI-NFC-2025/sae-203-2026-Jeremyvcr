@@ -4,13 +4,17 @@ import { pb, getImageUrl } from '../../lib/pocketbase.js';
 
 const { id } = Astro.params;
 
-const artiste = await pb.collection('artistes').getOne(id);
-
-const performances = await pb.collection('performances').getFullList({
-  filter: `artistes="${id}"`,
-  sort: 'date_et_heure',
-  expand: 'scene'
-});
+let artiste, performances;
+try {
+  artiste = await pb.collection('artistes').getOne(id);
+  performances = await pb.collection('performances').getFullList({
+    filter: `artistes="${id}"`,
+    sort: 'date_et_heure',
+    expand: 'scene'
+  });
+} catch {
+  return new Response(null, { status: 404 });
+}
 
 const photoUrl = getImageUrl(artiste, artiste.galerie);
 const firstPerformance = performances[0] ?? null;

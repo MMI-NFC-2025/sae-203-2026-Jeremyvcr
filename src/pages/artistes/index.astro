@@ -3,14 +3,15 @@ import Layout from '../../layouts/Layout.astro';
 import { pb } from '../../lib/pocketbase.js';
 import ArtistCard from '../../components/ArtistCard.astro';
 
-const artistes = await pb.collection('artistes').getFullList({
-  sort: 'nom'
-});
-
-const performances = await pb.collection('performances').getFullList({
-  sort: 'date_et_heure',
-  expand: 'scene'
-});
+let artistes = [];
+let performances = [];
+try {
+  artistes = await pb.collection('artistes').getFullList({ sort: 'nom' });
+  performances = await pb.collection('performances').getFullList({
+    sort: 'date_et_heure',
+    expand: 'scene'
+  });
+} catch { /* PocketBase inaccessible */ }
 
 const perfByArtiste = {};
 for (const perf of performances) {
@@ -33,6 +34,10 @@ const artistesSortedByDate = [...artistes].sort((a, b) => {
 <Layout title="Artistes">
   <main class="listing-page">
     <h1>Les artistes</h1>
+
+    {artistes.length === 0 && (
+      <p class="pb-unavailable">Données indisponibles — base de données non accessible.</p>
+    )}
 
     <section class="listing-grid">
       {artistesSortedByDate.map((artiste) => (
