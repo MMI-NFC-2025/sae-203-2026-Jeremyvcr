@@ -1,8 +1,9 @@
 ---
+import type { RecordModel } from 'pocketbase';
 import Layout from '../layouts/Layout.astro';
 import { pb, getImageUrl } from '../lib/pocketbase.js';
 
-let performances = [];
+let performances: RecordModel[] = [];
 try {
   performances = await pb.collection('performances').getFullList({
     sort: 'date_et_heure',
@@ -121,17 +122,18 @@ const programmePdfDataUrl =
   const selects = document.querySelectorAll('.program-filters [data-filter]');
 
   const applyFilters = () => {
-    const genre = document.querySelector('[data-filter="genre"]')?.value || '';
-    const scene = document.querySelector('[data-filter="scene"]')?.value || '';
-    const day = document.querySelector('[data-filter="day"]')?.value || '';
-    const time = document.querySelector('[data-filter="time"]')?.value || '';
+    const genre = (document.querySelector('[data-filter="genre"]') as HTMLSelectElement)?.value || '';
+    const scene = (document.querySelector('[data-filter="scene"]') as HTMLSelectElement)?.value || '';
+    const day = (document.querySelector('[data-filter="day"]') as HTMLSelectElement)?.value || '';
+    const time = (document.querySelector('[data-filter="time"]') as HTMLSelectElement)?.value || '';
 
     cards.forEach((card) => {
-      const genreMatch = !genre || card.dataset.genre === genre;
-      const sceneMatch = !scene || card.dataset.scene === scene;
-      const dayMatch = !day || card.dataset.day === day;
-      const timeMatch = !time || card.dataset.time === time;
-      card.style.display = genreMatch && sceneMatch && dayMatch && timeMatch ? '' : 'none';
+      const el = card as HTMLElement;
+      const genreMatch = !genre || el.dataset.genre === genre;
+      const sceneMatch = !scene || el.dataset.scene === scene;
+      const dayMatch = !day || el.dataset.day === day;
+      const timeMatch = !time || el.dataset.time === time;
+      el.style.display = genreMatch && sceneMatch && dayMatch && timeMatch ? '' : 'none';
     });
   };
 

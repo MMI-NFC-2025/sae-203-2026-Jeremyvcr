@@ -1,0 +1,7 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  POCKETBASE_URL = "https://sae206.vicaire.optimiseus.fr"
+  NODE_VERSION = "20"
