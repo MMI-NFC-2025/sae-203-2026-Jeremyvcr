@@ -1,7 +1,7 @@
 import PocketBase from 'pocketbase';
 
 const runtimeEnv = typeof process !== 'undefined' ? process.env : {};
-const fallbackProdUrl = 'https://sae206.vicaire.optimiseus.fr';
+const fallbackProdUrl = 'https://sae206.vicaire.optimiseus.fr:443';
 
 const pbUrl =
   runtimeEnv.POCKETBASE_URL ||
