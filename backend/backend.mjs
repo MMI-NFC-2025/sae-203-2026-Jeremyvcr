@@ -1,6 +1,6 @@
 import PocketBase from 'pocketbase';
 
-const pb = new PocketBase('https://sae206.vicaire.optimiseus.fr:4043');
+const pb = new PocketBase('https://sae206.vicaire.optimiseus.fr:443');
 
 // 1. Liste de tous les artistes triés par date de représentation
 export async function getArtistsByDate() {
