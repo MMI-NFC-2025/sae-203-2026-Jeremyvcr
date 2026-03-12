@@ -1,12 +1,14 @@
 ---
+import type { RecordModel } from 'pocketbase';
 import Layout from '../../layouts/Layout.astro';
 import { pb, getImageUrl } from '../../lib/pocketbase.js';
 
 const { id } = Astro.params;
 
-let scene, performances;
+let scene!: RecordModel;
+let performances!: RecordModel[];
 try {
-  scene = await pb.collection('scene').getOne(id);
+  scene = await pb.collection('scene').getOne(id as string);
   performances = await pb.collection('performances').getFullList({
     filter: `scene="${id}"`,
     sort: 'date_et_heure',
@@ -43,22 +45,24 @@ const scenePhotoUrl = getImageUrl(scene, scene.photo);
 
     <section class="listing-grid">
       {performances.map((perf) => {
-        const artistePhotoUrl = getImageUrl(perf.expand?.artistes, perf.expand?.artistes?.galerie);
+        const artisteData = perf.expand?.artistes;
+        const galerieArtiste = Array.isArray(artisteData?.galerie) ? artisteData?.galerie[0] : artisteData?.galerie;
+        const artistePhotoUrl = getImageUrl(artisteData, galerieArtiste);
         return (
           <article class="listing-card">
             {artistePhotoUrl && (
               <img
                 class="listing-card__photo"
                 src={artistePhotoUrl}
-                alt={perf.expand?.artistes?.nom}
+                alt={artisteData?.nom}
                 loading="lazy"
               />
             )}
             <div class="listing-card__body">
-              <p>{perf.expand?.artistes?.nom}</p>
+              <p>{artisteData?.nom}</p>
               <p>{new Date(perf.date_et_heure).toLocaleString('fr-FR')}</p>
-              {perf.expand?.artistes?.id && (
-                <a class="listing-card__link" href={`/artistes/${perf.expand.artistes.id}`}>
+              {artisteData?.id && (
+                <a class="listing-card__link" href={`/artistes/${artisteData.id}`}>
                   Voir l'artiste
                 </a>
               )}

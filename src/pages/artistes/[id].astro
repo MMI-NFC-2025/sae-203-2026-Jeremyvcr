@@ -1,12 +1,14 @@
 ---
+import type { RecordModel } from 'pocketbase';
 import Layout from '../../layouts/Layout.astro';
 import { pb, getImageUrl } from '../../lib/pocketbase.js';
 
 const { id } = Astro.params;
 
-let artiste, performances;
+let artiste!: RecordModel;
+let performances!: RecordModel[];
 try {
-  artiste = await pb.collection('artistes').getOne(id);
+  artiste = await pb.collection('artistes').getOne(id as string);
   performances = await pb.collection('performances').getFullList({
     filter: `artistes="${id}"`,
     sort: 'date_et_heure',
@@ -20,7 +22,7 @@ const galeriePrimary = Array.isArray(artiste.galerie) ? artiste.galerie[0] : art
 const photoUrl = getImageUrl(artiste, galeriePrimary);
 const firstPerformance = performances[0] ?? null;
 
-const formatTime = (value) => new Intl.DateTimeFormat('fr-FR', {
+const formatTime = (value: string) => new Intl.DateTimeFormat('fr-FR', {
   hour: '2-digit',
   minute: '2-digit',
   timeZone: 'Europe/Paris'
@@ -138,10 +140,10 @@ if (carouselUrls.length > 0 && carouselUrls.length < 4) {
   const carousels = document.querySelectorAll('[data-carousel]');
 
   carousels.forEach((carousel) => {
-    const track = carousel.querySelector('[data-carousel-track]');
+    const track = carousel.querySelector('[data-carousel-track]') as HTMLElement | null;
     const slides = carousel.querySelectorAll('[data-carousel-slide]');
-    const prevBtn = carousel.querySelector('[data-carousel-prev]');
-    const nextBtn = carousel.querySelector('[data-carousel-next]');
+    const prevBtn = carousel.querySelector('[data-carousel-prev]') as HTMLButtonElement | null;
+    const nextBtn = carousel.querySelector('[data-carousel-next]') as HTMLButtonElement | null;
     const dots = carousel.querySelectorAll('[data-carousel-dot]');
 
     if (!track || slides.length === 0) return;

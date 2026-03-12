@@ -27,7 +27,7 @@ const artistesSortedByDate = [...artistes].sort((a, b) => {
   if (!aFirst && !bFirst) return a.nom.localeCompare(b.nom, 'fr');
   if (!aFirst) return 1;
   if (!bFirst) return -1;
-  return new Date(aFirst) - new Date(bFirst);
+  return new Date(aFirst).getTime() - new Date(bFirst).getTime();
 });
 ---
 
