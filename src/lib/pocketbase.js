@@ -1,14 +1,14 @@
 import PocketBase from 'pocketbase';
 
 const runtimeEnv = typeof process !== 'undefined' ? process.env : {};
-const fallbackProdUrl = 'https://sae206.vicaire.optimiseus.fr:443';
+const fallbackProdUrl = 'https://sae206.vicaire.optimiseus.fr';
 
 const pbUrl =
   runtimeEnv.POCKETBASE_URL ||
   runtimeEnv.PUBLIC_POCKETBASE_URL ||
   import.meta.env.POCKETBASE_URL ||
   import.meta.env.PUBLIC_POCKETBASE_URL ||
-  (import.meta.env.DEV ? 'https://sae206.vicaire.optimiseus.fr:443' : fallbackProdUrl);
+  (import.meta.env.DEV ? 'https://sae206.vicaire.optimiseus.fr' : fallbackProdUrl);
 
 export const pb = new PocketBase(pbUrl);
 

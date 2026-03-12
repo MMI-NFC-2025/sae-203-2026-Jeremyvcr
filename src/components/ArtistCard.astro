@@ -1,7 +1,8 @@
 ---
 import { getImageUrl } from '../lib/pocketbase.js';
 const { artiste, performances = [] } = Astro.props;
-const photoUrl = getImageUrl(artiste, artiste.galerie);
+const galeriePrimary = Array.isArray(artiste.galerie) ? artiste.galerie[0] : artiste.galerie;
+const photoUrl = getImageUrl(artiste, galeriePrimary);
 ---
 
 <a class="listing-card listing-card--clickable" href={`/artistes/${artiste.id}`} aria-label={`Voir la page de ${artiste.nom}`}>

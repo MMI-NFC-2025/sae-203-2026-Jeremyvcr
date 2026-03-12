@@ -676,6 +676,30 @@ main {
   cursor: pointer;
 }
 
+.contact-form button:hover {
+  background: var(--color-primary-dark);
+}
+
+.contact-form--success {
+  display: grid;
+  place-content: center;
+  min-height: 140px;
+  text-align: center;
+  color: #276b2a;
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.contact-form__error {
+  background: #fde8e8;
+  border: 1px solid #f5a3a3;
+  border-radius: 8px;
+  padding: 0.6rem 0.85rem;
+  color: #c0392b;
+  font-weight: 600;
+  margin: 0;
+}
+
 .contact-socials {
   margin-top: 0.8rem;
   display: flex;

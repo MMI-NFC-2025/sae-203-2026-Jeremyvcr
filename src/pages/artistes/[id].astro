@@ -16,7 +16,8 @@ try {
   return new Response(null, { status: 404 });
 }
 
-const photoUrl = getImageUrl(artiste, artiste.galerie);
+const galeriePrimary = Array.isArray(artiste.galerie) ? artiste.galerie[0] : artiste.galerie;
+const photoUrl = getImageUrl(artiste, galeriePrimary);
 const firstPerformance = performances[0] ?? null;
 
 const formatTime = (value) => new Intl.DateTimeFormat('fr-FR', {

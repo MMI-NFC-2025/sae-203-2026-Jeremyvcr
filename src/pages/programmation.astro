@@ -79,7 +79,8 @@ const programmePdfDataUrl =
     <section class="listing-grid" data-program-list>
       {performances.map((perf) => {
         const artiste = perf.expand?.artistes;
-        const photoUrl = getImageUrl(artiste, artiste?.galerie);
+        const galeriePrimary = Array.isArray(artiste?.galerie) ? artiste?.galerie[0] : artiste?.galerie;
+        const photoUrl = getImageUrl(artiste, galeriePrimary);
         const day = new Date(perf.date_et_heure).toISOString().slice(0, 10);
         const time = new Date(perf.date_et_heure).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
         return (

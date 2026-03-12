@@ -3,7 +3,7 @@ import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 
-const { title = "La Fanfà'Comtoise" } = Astro.props;
+const { title = "La Fanfà'Comtoise", description = "Festival La Fanfà'Comtoise — Jazz, Fanfare, Bonne humeur. Du 27 au 29 juin 2026 à Montbéliard." } = Astro.props;
 ---
 
 <!doctype html>
@@ -11,8 +11,9 @@ const { title = "La Fanfà'Comtoise" } = Astro.props;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{title}</title>
-    <meta name="description" content="Festival La Fanfà'Comtoise" />
+    <title>{title} — La Fanfà'Comtoise</title>
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#eab774" />
     <link rel="icon" href="/favicon.ico" />
   </head>
   <body>

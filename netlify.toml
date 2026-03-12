@@ -5,4 +5,3 @@
 [build.environment]
   POCKETBASE_URL = "https://sae206.vicaire.optimiseus.fr"
   NODE_VERSION = "20"
-  NODE_TLS_REJECT_UNAUTHORIZED = "0"
