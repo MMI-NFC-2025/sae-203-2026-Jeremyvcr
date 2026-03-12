@@ -8,7 +8,7 @@ const pbUrl =
   runtimeEnv.PUBLIC_POCKETBASE_URL ||
   import.meta.env.POCKETBASE_URL ||
   import.meta.env.PUBLIC_POCKETBASE_URL ||
-  (import.meta.env.DEV ? 'http://127.0.0.1:8090' : fallbackProdUrl);
+  (import.meta.env.DEV ? 'https://sae206.vicaire.optimiseus.fr:443' : fallbackProdUrl);
 
 export const pb = new PocketBase(pbUrl);
 
