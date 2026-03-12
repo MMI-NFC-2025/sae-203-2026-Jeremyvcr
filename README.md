@@ -3,3 +3,9 @@
 - Prénom:
 - url: 
 
+## PocketBase (local + Netlify)
+
+- En local, le projet utilise `http://127.0.0.1:8090` par défaut.
+- En production (Netlify), définir `POCKETBASE_URL` (ou `PUBLIC_POCKETBASE_URL`) dans les variables d'environnement.
+- Exemple : `https://sae206.vicaire.optimiseus.fr`
+

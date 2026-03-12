@@ -1,6 +1,15 @@
 import PocketBase from 'pocketbase';
 
-const pbUrl = import.meta.env.POCKETBASE_URL || 'http://127.0.0.1:8090';
+const runtimeEnv = typeof process !== 'undefined' ? process.env : {};
+const fallbackProdUrl = 'https://sae206.vicaire.optimiseus.fr';
+
+const pbUrl =
+  runtimeEnv.POCKETBASE_URL ||
+  runtimeEnv.PUBLIC_POCKETBASE_URL ||
+  import.meta.env.POCKETBASE_URL ||
+  import.meta.env.PUBLIC_POCKETBASE_URL ||
+  (import.meta.env.DEV ? 'http://127.0.0.1:8090' : fallbackProdUrl);
+
 export const pb = new PocketBase(pbUrl);
 
 /**
