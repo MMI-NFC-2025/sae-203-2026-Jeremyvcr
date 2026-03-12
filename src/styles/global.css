@@ -192,8 +192,7 @@ main {
 
 .home-program__cards,
 .listing-grid,
-.partners__logos,
-.info-grid {
+.partners__logos {
   display: grid;
   gap: 1rem;
   margin-top: 1rem;
@@ -215,8 +214,6 @@ main {
 
 .program-card,
 .listing-card,
-.content-page__section,
-.info-card,
 .contact-details,
 .contact-form {
   background: var(--color-surface);
@@ -476,8 +473,6 @@ main {
   font-size: 1.05rem;
 }
 
-.content-page__section h2,
-.info-card h2,
 .contact-details h2 {
   color: var(--color-accent);
   font-size: 1.8rem;
@@ -822,10 +817,6 @@ main {
 
   .artist-carousel__slide img {
     height: 340px;
-  }
-
-  .info-grid {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
   .contact-layout {

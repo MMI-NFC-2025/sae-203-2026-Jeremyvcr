@@ -7,13 +7,11 @@ const artistes = await pb.collection('artistes').getFullList({
   sort: 'nom'
 });
 
-// Récupère toutes les performances pour afficher scène + heure sur chaque carte
 const performances = await pb.collection('performances').getFullList({
   sort: 'date_et_heure',
   expand: 'scene'
 });
 
-// Construit un dictionnaire artisteId -> performance[]
 const perfByArtiste = {};
 for (const perf of performances) {
   const artisteId = perf.artistes;

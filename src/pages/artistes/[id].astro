@@ -2,7 +2,6 @@
 import Layout from '../../layouts/Layout.astro';
 import { pb, getImageUrl } from '../../lib/pocketbase.js';
 
-
 const { id } = Astro.params;
 
 const artiste = await pb.collection('artistes').getOne(id);
@@ -41,8 +40,6 @@ const galleryUrls = [...new Set(artistFiles)]
 const baseCarouselUrls = galleryUrls.length > 0 ? galleryUrls : (photoUrl ? [photoUrl] : []);
 const carouselUrls = [...baseCarouselUrls];
 
-// Force plusieurs slides pour pouvoir faire defiler le carrousel
-// meme quand PocketBase contient peu d'images.
 if (carouselUrls.length > 0 && carouselUrls.length < 4) {
   let index = 0;
   while (carouselUrls.length < 4) {

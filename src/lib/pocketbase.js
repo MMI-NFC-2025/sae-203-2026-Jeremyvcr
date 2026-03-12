@@ -1,6 +1,7 @@
 import PocketBase from 'pocketbase';
 
-export const pb = new PocketBase('http://127.0.0.1:8090');
+const pbUrl = import.meta.env.POCKETBASE_URL || 'http://127.0.0.1:8090';
+export const pb = new PocketBase(pbUrl);
 
 /**
  * Construit l'URL d'un fichier stocké dans PocketBase.
